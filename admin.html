@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - AGS Limited Company</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .login-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 0 5px;
+        }
+        
+        .otp-input:focus {
+            border-color: #059669;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+        
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+        
+        .admin-panel {
+            display: none;
+        }
+        
+        .admin-panel.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- OTP Login Section -->
+    <div id="loginSection" class="login-container flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
+            <div class="text-center mb-8">
+                <img src="images/logo.jpeg" alt="AGS Limited" class="mx-auto h-20 w-auto mb-4">
+                <h1 class="text-2xl font-bold text-gray-800">Admin Access</h1>
+                <p class="text-gray-600 mt-2">Secure login required</p>
+            </div>
+            
+            <!-- Step 1: Request OTP -->
+            <div id="requestOTPStep">
+                <div class="text-center mb-6">
+                    <i class="fas fa-shield-alt text-4xl text-green-600 mb-4"></i>
+                    <p class="text-gray-700">Click below to send OTP to your registered phone</p>
+                    <p class="text-sm text-gray-500 mt-2">SMS will be sent to: ****91200</p>
+                </div>
+                
+                <button onclick="requestOTP()" id="requestOTPBtn" 
+                        class="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-semibold transition-colors">
+                    <i class="fas fa-mobile-alt mr-2"></i>
+                    Send OTP
+                </button>
+            </div>
+            
+            <!-- Step 2: Enter OTP -->
+            <div id="enterOTPStep" class="hidden">
+                <div class="text-center mb-6">
+                    <i class="fas fa-sms text-4xl text-blue-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">Enter OTP Code</h3>
+                    <p class="text-gray-600">6-digit code sent to your phone</p>
+                </div>
+                
+                <div class="flex justify-center mb-6">
+                    <input type="text" maxlength="1" class="otp-input" id="otp1" oninput="moveToNext(this, 'otp2')">
+                    <input type="text" maxlength="1" class="otp-input" id="otp2" oninput="moveToNext(this, 'otp3')">
+                    <input type="text" maxlength="1" class="otp-input" id="otp3" oninput="moveToNext(this, 'otp4')">
+                    <input type="text" maxlength="1" class="otp-input" id="otp4" oninput="moveToNext(this, 'otp5')">
+                    <input type="text" maxlength="1" class="otp-input" id="otp5" oninput="moveToNext(this, 'otp6')">
+                    <input type="text" maxlength="1" class="otp-input" id="otp6" oninput="verifyOTP()">
+                </div>
+                
+                <button onclick="verifyOTP()" id="verifyBtn"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-semibold mb-3">
+                    <i class="fas fa-key mr-2"></i>
+                    Verify & Login
+                </button>
+                
+                <button onclick="requestOTP()" 
+                        class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded-lg text-sm">
+                    Resend OTP
+                </button>
+                
+                <div id="countdown" class="text-center mt-3 text-sm text-gray-500"></div>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loadingState" class="hidden text-center">
+                <div class="pulse">
+                    <i class="fas fa-spinner fa-spin text-3xl text-green-600 mb-4"></i>
+                    <p class="text-gray-600">Processing...</p>
+                </div>
+            </div>
+            
+            <!-- Status Messages -->
+            <div id="statusMessage" class="mt-4 p-3 rounded-lg text-center hidden">
+                <span id="messageText"></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin Panel (Hidden until authenticated) -->
+    <div id="adminPanel" class="admin-panel">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center space-x-4">
+                        <img src="images/logo.jpeg" alt="" height="65px" width="90px">
+                        <span class="text-2xl font-bold text-gray-800">AGS LIMITED - Admin</span>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <span class="text-gray-600">Welcome, Admin</span>
+                        <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Admin Content -->
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Dashboard Cards -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <i class="fas fa-shopping-cart text-2xl text-blue-600"></i>
+                        <div class="ml-4">
+                            <p class="text-gray-600">Total Orders</p>
+                            <p class="text-2xl font-bold">247</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <i class="fas fa-leaf text-2xl text-green-600"></i>
+                        <div class="ml-4">
+                            <p class="text-gray-600">Products</p>
+                            <p class="text-2xl font-bold">156</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <i class="fas fa-users text-2xl text-purple-600"></i>
+                        <div class="ml-4">
+                            <p class="text-gray-600">Customers</p>
+                            <p class="text-2xl font-bold">89</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <i class="fas fa-money-bill text-2xl text-yellow-600"></i>
+                        <div class="ml-4">
+                            <p class="text-gray-600">Revenue</p>
+                            <p class="text-2xl font-bold">Ksh 45,320</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-lg shadow p-6 mb-8">
+                <h2 class="text-xl font-bold mb-4">Quick Actions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button class="bg-green-600 hover:bg-green-700 text-white p-4 rounded-lg">
+                        <i class="fas fa-plus mb-2"></i><br>
+                        Add Product
+                    </button>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-lg">
+                        <i class="fas fa-list mb-2"></i><br>
+                        View Orders
+                    </button>
+                    <button class="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-lg">
+                        <i class="fas fa-chart-bar mb-2"></i><br>
+                        Analytics
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Recent Orders Table -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6 border-b">
+                    <h2 class="text-xl font-bold">Recent Orders</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 text-sm">#001</td>
+                                <td class="px-6 py-4 text-sm">John Doe</td>
+                                <td class="px-6 py-4 text-sm">Ksh 2,450</td>
+                                <td class="px-6 py-4 text-sm"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Completed</span></td>
+                                <td class="px-6 py-4 text-sm">Today</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 text-sm">#002</td>
+                                <td class="px-6 py-4 text-sm">Jane Smith</td>
+                                <td class="px-6 py-4 text-sm">Ksh 1,200</td>
+                                <td class="px-6 py-4 text-sm"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Pending</span></td>
+                                <td class="px-6 py-4 text-sm">Yesterday</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global variables
+        let otpSent = false;
+        let currentOTP = null;
+        let otpExpiry = null;
+        
+        // Mock SMS service (replace with actual SMS API)
+        async function sendSMSOTP(phoneNumber, otp) {
+            // In a real implementation, you would call your SMS API here
+            // For now, we'll simulate it and show the OTP in console for testing
+            console.log(`SMS to ${phoneNumber}: Your AGS Admin OTP is ${otp}. Valid for 5 minutes.`);
+            
+            // Simulate API call
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({ success: true, message: 'OTP sent successfully' });
+                }, 1500);
+            });
+        }
+        
+        // Generate random 6-digit OTP
+        function generateOTP() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+        
+        // Request OTP
+        async function requestOTP() {
+            showLoading(true);
+            
+            try {
+                // Generate OTP
+                currentOTP = generateOTP();
+                otpExpiry = Date.now() + (5 * 60 * 1000); // 5 minutes from now
+                
+                // Send SMS (replace with actual SMS service)
+                const response = await sendSMSOTP('0759591200', currentOTP);
+                
+                if (response.success) {
+                    showMessage('OTP sent to your phone!', 'success');
+                    
+                    // Switch to OTP input step
+                    document.getElementById('requestOTPStep').classList.add('hidden');
+                    document.getElementById('enterOTPStep').classList.remove('hidden');
+                    
+                    // Focus first input
+                    document.getElementById('otp1').focus();
+                    
+                    // Start countdown
+                    startCountdown();
+                    
+                    otpSent = true;
+                } else {
+                    showMessage('Failed to send OTP. Please try again.', 'error');
+                }
+            } catch (error) {
+                showMessage('Error sending OTP. Please try again.', 'error');
+            }
+            
+            showLoading(false);
+        }
+        
+        // Move to next OTP input
+        function moveToNext(current, nextId) {
+            if (current.value.length === 1 && nextId) {
+                document.getElementById(nextId).focus();
+            }
+            
+            // Auto-verify when last digit is entered
+            if (current.id === 'otp6' && current.value.length === 1) {
+                setTimeout(verifyOTP, 100);
+            }
+        }
+        
+        // Verify OTP
+        function verifyOTP() {
+            const enteredOTP = [
+                document.getElementById('otp1').value,
+                document.getElementById('otp2').value,
+                document.getElementById('otp3').value,
+                document.getElementById('otp4').value,
+                document.getElementById('otp5').value,
+                document.getElementById('otp6').value
+            ].join('');
+            
+            if (enteredOTP.length !== 6) {
+                showMessage('Please enter complete 6-digit OTP', 'error');
+                return;
+            }
+            
+            // Check if OTP has expired
+            if (Date.now() > otpExpiry) {
+                showMessage('OTP has expired. Please request a new one.', 'error');
+                resetToRequestStep();
+                return;
+            }
+            
+            showLoading(true);
+            
+            setTimeout(() => {
+                if (enteredOTP === currentOTP) {
+                    showMessage('Login successful!', 'success');
+                    
+                    // Hide login section and show admin panel
+                    setTimeout(() => {
+                        document.getElementById('loginSection').style.display = 'none';
+                        document.getElementById('adminPanel').classList.add('active');
+                    }, 1000);
+                    
+                } else {
+                    showMessage('Invalid OTP. Please try again.', 'error');
+                    clearOTPInputs();
+                }
+                
+                showLoading(false);
+            }, 1000);
+        }
+        
+        // Start countdown timer
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            const endTime = Date.now() + (5 * 60 * 1000); // 5 minutes
+            
+            const timer = setInterval(() => {
+                const remaining = endTime - Date.now();
+                
+                if (remaining <= 0) {
+                    clearInterval(timer);
+                    countdownElement.textContent = 'OTP expired';
+                    showMessage('OTP has expired. Please request a new one.', 'error');
+                    resetToRequestStep();
+                    return;
+                }
+                
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                countdownElement.textContent = `OTP expires in ${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+        
+        // Reset to request step
+        function resetToRequestStep() {
+            document.getElementById('enterOTPStep').classList.add('hidden');
+            document.getElementById('requestOTPStep').classList.remove('hidden');
+            clearOTPInputs();
+            currentOTP = null;
+            otpExpiry = null;
+        }
+        
+        // Clear OTP inputs
+        function clearOTPInputs() {
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById(`otp${i}`).value = '';
+            }
+            document.getElementById('otp1').focus();
+        }
+        
+        // Show loading state
+        function showLoading(show) {
+            const loadingState = document.getElementById('loadingState');
+            const requestStep = document.getElementById('requestOTPStep');
+            const enterStep = document.getElementById('enterOTPStep');
+            
+            if (show) {
+                loadingState.classList.remove('hidden');
+                requestStep.classList.add('hidden');
+                enterStep.classList.add('hidden');
+            } else {
+                loadingState.classList.add('hidden');
+                if (otpSent) {
+                    enterStep.classList.remove('hidden');
+                } else {
+                    requestStep.classList.remove('hidden');
+                }
+            }
+        }
+        
+        // Show status message
+        function showMessage(message, type) {
+            const statusElement = document.getElementById('statusMessage');
+            const messageText = document.getElementById('messageText');
+            
+            messageText.textContent = message;
+            statusElement.className = `mt-4 p-3 rounded-lg text-center ${
+                type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+            }`;
+            statusElement.classList.remove('hidden');
+            
+            setTimeout(() => {
+                statusElement.classList.add('hidden');
+            }, 4000);
+        }
+        
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Reset everything
+                document.getElementById('adminPanel').classList.remove('active');
+                document.getElementById('loginSection').style.display = 'flex';
+                resetToRequestStep();
+                showMessage('Logged out successfully', 'success');
+            }
+        }
+        
+        // Prevent back button after login
+        window.addEventListener('popstate', function(event) {
+            if (document.getElementById('adminPanel').classList.contains('active')) {
+                history.pushState(null, null, location.href);
+            }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Push initial state to prevent back button
+            history.pushState(null, null, location.href);
+        });
+        
+        // Handle keyboard events
+        document.addEventListener('keydown', function(e) {
+            // Allow backspace in OTP inputs
+            if (e.target.classList.contains('otp-input') && e.key === 'Backspace') {
+                if (e.target.value === '') {
+                    const currentId = e.target.id;
+                    const currentNumber = parseInt(currentId.replace('otp', ''));
+                    if (currentNumber > 1) {
+                        document.getElementById(`otp${currentNumber - 1}`).focus();
+                    }
+                }
+            }
+            
+            // Enter key to verify OTP
+            if (e.key === 'Enter' && document.getElementById('enterOTPStep').classList.contains('hidden') === false) {
+                verifyOTP();
+            }
+        });
+    </script>
+</body>
+</html>

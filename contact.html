@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - AGS LIMITED COMPANY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                     <img src="images/logo.jpeg" alt="" height="65px" width="90px">
+                    <span class="text-2xl font-bold text-gray-800">AGS LIMITED</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-green-600 font-medium">Home</a>
+                    <a href="shop.html" class="text-gray-700 hover:text-green-600 font-medium">Shop</a>
+                    <a href="categories.html" class="text-gray-700 hover:text-green-600 font-medium">Categories</a>
+                    <a href="about.html" class="text-gray-700 hover:text-green-600 font-medium">About</a>
+                    <a href="contact.html" class="text-green-600 font-medium">Contact</a>
+                    <a href="admin.html" class="text-gray-700 hover:text-green-600 font-medium">Admin</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleCart()" class="relative p-2">
+                        <i class="fas fa-shopping-cart text-xl text-gray-700"></i>
+                        <span id="cartBadge" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Hero -->
+    <section class="bg-gradient-to-r from-green-600 to-green-800 py-16 text-white">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-5xl font-bold mb-4">Get In Touch</h1>
+            <p class="text-xl opacity-90">We'd love to hear from you. Contact us today!</p>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <div class="max-w-7xl mx-auto px-4 py-16">
+        <!-- Contact Cards -->
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <div class="contact-card bg-white p-8 rounded-lg shadow-lg text-center">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-map-marker-alt text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Visit Our Office</h3>
+                <p class="text-gray-600">Nairobi County, Kenya</p>
+                <p class="text-sm text-gray-500 mt-2">Open Monday - Saturday</p>
+            </div>
+            
+            <div class="contact-card bg-white p-8 rounded-lg shadow-lg text-center">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-phone text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Call Us</h3>
+                <p class="text-gray-600">+254 706 624 403</p>
+                <p class="text-sm text-gray-500 mt-2">Mon-Fri 6AM-6.00PM</p>
+            </div>
+            
+            <div class="contact-card bg-white p-8 rounded-lg shadow-lg text-center">
+                <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-envelope text-yellow-600 text-2xl"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Email Us</h3>
+                <p class="text-gray-600">stevemashie@gmail.com</p>
+                <p class="text-sm text-gray-500 mt-2">We reply within 24 hours</p>
+            </div>
+        </div>
+
+        <!-- Main Contact Section -->
+        <div class="grid md:grid-cols-2 gap-12">
+            <!-- Contact Information -->
+            <div>
+                <h2 class="text-3xl font-bold mb-6">Contact Information</h2>
+                
+                <div class="space-y-6 mb-8">
+                    <div class="flex items-start space-x-4">
+                        <i class="fas fa-map-marker-alt text-green-600 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold">Address</h4>
+                            <p class="text-gray-600">AGS Limited Company<br>Nairobi County<br>Kenya</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <i class="fas fa-phone text-green-600 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold">Phone</h4>
+                            <p class="text-gray-600">+254 714 096 025</p>
+                             <h4 class="font-semibold">Phone</h4>
+                            <p class="text-gray-600">+254 115 054 834</p>
+                            <h4 class="font-semibold">Phone</h4>
+                            <p class="text-gray-600">+254 759 591 200</p>
+                            <h4 class="font-semibold">Phone</h4>
+                            <p class="text-gray-600">+254 706 828 718</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <i class="fas fa-envelope text-green-600 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold">Email</h4>
+                            <p class="text-gray-600">stevemashie@gmail.com</p>
+                             <h4 class="font-semibold">Email</h4>
+                            <p class="text-gray-600">marthairush12@.com</p>
+                             <h4 class="font-semibold">Email</h4>
+                            <p class="text-gray-600">ptahmbogoh@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <i class="fab fa-whatsapp text-green-600 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold">WhatsApp</h4>
+                            <p class="text-gray-600">+254 706 624 403 </p>
+                            <h4 class="font-semibold">WhatsApp</h4>
+                            <p class="text-gray-600">+254 759 591 200</p>
+                            <h4 class="font-semibold">WhatsApp</h4>
+                            <p class="text-gray-600">+254 115 054 834</p>
+                            <h4 class="font-semibold">WhatsApp</h4>
+                            <p class="text-gray-600">+254 706 828 718</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Business Hours -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">Business Hours</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="font-medium">Monday - Friday</span>
+                            <span class="text-gray-600">6:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="font-medium">Saturday</span>
+                            <span class="text-gray-600">8:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="font-medium">Sunday</span>
+                            <span class="text-gray-600">CLOSED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold mb-6">Send us a Message</h2>
+                <form id="contactForm" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                            <input type="text" name="firstName" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                            <input type="text" name="lastName" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                        <input type="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                        <input type="tel" name="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                        <select name="subject" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent">
+                            <option value="">Select a subject</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="order">Order Information</option>
+                            <option value="partnership">Partnership Opportunity</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="support">Customer Support</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                        <textarea name="message" rows="5" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent" placeholder="Tell us how we can help you..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-semibold transition-all transform hover:scale-105">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="mt-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h4 class="font-bold text-lg mb-2">What are your delivery areas?</h4>
+                        <p class="text-gray-600">We deliver throughout Nairobi County and surrounding areas. Same-day delivery is available within Thika and immediate surroundings.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h4 class="font-bold text-lg mb-2">How do I place an order?</h4>
+                        <p class="text-gray-600">You can place an order through our website, WhatsApp, or by calling us directly. Our team will confirm your order and arrange delivery.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h4 class="font-bold text-lg mb-2">Are your products really organic?</h4>
+                        <p class="text-gray-600">Yes! All our products are certified organic and we work directly with certified organic farmers who follow strict organic farming practices.</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h4 class="font-bold text-lg mb-2">What payment methods do you accept?</h4>
+                        <p class="text-gray-600">We accept cash on delivery, M-Pesa, bank transfers, and mobile money payments. Payment details will be provided upon order confirmation.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h4 class="font-bold text-lg mb-2">Do you offer bulk discounts?</h4>
+                        <p class="text-gray-600">Yes! We offer competitive pricing for bulk orders and regular customers. Contact us directly to discuss bulk pricing options.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h4 class="font-bold text-lg mb-2">How fresh are your products?</h4>
+                        <p class="text-gray-600">Our products are harvested and delivered within 24-48 hours. We guarantee freshness and quality with every order.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-green-600 rounded-2xl p-8 mt-16 text-center text-white">
+            <h2 class="text-3xl font-bold mb-4">Ready to Order?</h2>
+            <p class="text-xl mb-6">Contact us now and get fresh organic produce delivered to your doorstep</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="https://wa.me/254714096025" target="_blank" class="bg-white text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all inline-flex items-center justify-center">
+                    <i class="fab fa-whatsapp mr-2"></i>
+                    WhatsApp Us
+                </a>
+                <a href="tel:+254714096025" class="bg-green-700 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-800 transition-all inline-flex items-center justify-center">
+                    <i class="fas fa-phone mr-2"></i>
+                    Call Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification bg-green-600 text-white px-6 py-4 rounded-lg shadow-lg">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="notificationText">Message sent successfully!</span>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/254714096025?text=Hello! I have a question about AGS Limited Company's products and services." 
+       target="_blank" class="fixed bottom-6 left-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg z-50 transition-all transform hover:scale-110">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <script src="js/common.js"></script>
+    <script>
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const firstName = formData.get('firstName');
+            const lastName = formData.get('lastName');
+            const email = formData.get('email');
+            const phone = formData.get('phone');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Create WhatsApp message
+            const whatsappMessage = `Hello AGS Limited Company!
+
+Name: ${firstName} ${lastName}
+Email: ${email}
+Phone: ${phone || 'Not provided'}
+Subject: ${subject}
+
+Message: ${message}
+
+Please get back to me at your earliest convenience.`;
+
+            // Show success notification
+            showNotification('Message sent successfully! We\'ll get back to you soon.');
+            
+            // Reset form
+            this.reset();
+            
+            // Optional: Open WhatsApp with pre-filled message
+            setTimeout(() => {
+                const whatsappUrl = `https://wa.me/254714096025?text=${encodeURIComponent(whatsappMessage)}`;
+                window.open(whatsappUrl, '_blank');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

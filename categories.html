@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - AGS LIMITED COMPANY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .category-card:hover {
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+            background-color: green;
+        }
+        
+        .category-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                     <img src="images/logo.jpeg" alt="" height="65px" width="90px">
+                    <span class="text-2xl font-bold text-gray-800">AGS LIMITED</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-green-600 font-medium">Home</a>
+                    <a href="shop.html" class="text-gray-700 hover:text-green-600 font-medium">Shop</a>
+                    <a href="categories.html" class="text-green-600 font-medium">Categories</a>
+                    <a href="about.html" class="text-gray-700 hover:text-green-600 font-medium">About</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-green-600 font-medium">Contact</a>
+                    <a href="admin.html" class="text-gray-700 hover:text-green-600 font-medium">Admin</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleCart()" class="relative p-2">
+                        <i class="fas fa-shopping-cart text-xl text-gray-700"></i>
+                        <span id="cartBadge" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Categories Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center mb-8">Product Categories</h1>
+        <p class="text-center text-gray-600 mb-12 text-lg">Discover our premium selection of fresh produce</p>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="category-card bg-gradient-to-br from-red-400 to-red-600 p-8 rounded-xl text-white text-center" onclick="goToShopWithFilter('fruits')">
+                <i class="fas fa-apple-alt text-4xl mb-4"></i>
+                <h3 class="text-2xl font-bold mb-2">Fruits</h3>
+                <p>Fresh seasonal fruits</p>
+                <div class="mt-4 text-sm opacity-90">
+                    <p>Apples, Bananas, Oranges, Berries & More</p>
+                </div>
+            </div>
+            
+            <div class="category-card bg-gradient-to-br from-green-400 to-green-600 p-8 rounded-xl text-white text-center" onclick="goToShopWithFilter('vegetables')">
+                <i class="fas fa-carrot text-4xl mb-4"></i>
+                <h3 class="text-2xl font-bold mb-2">Vegetables</h3>
+                <p>Garden fresh vegetables</p>
+                <div class="mt-4 text-sm opacity-90">
+                    <p>Tomatoes, Carrots, Broccoli, Peppers & More</p>
+                </div>
+            </div>
+            
+            <div class="category-card bg-gradient-to-br from-purple-400 to-purple-600 p-8 rounded-xl text-white text-center" onclick="goToShopWithFilter('herbs')">
+                <i class="fas fa-seedling text-4xl mb-4"></i>
+                <h3 class="text-2xl font-bold mb-2">Herbs</h3>
+                <p>Aromatic fresh herbs</p>
+                <div class="mt-4 text-sm opacity-90">
+                    <p>Basil, Parsley, Cilantro, Rosemary & More</p>
+                </div>
+            </div>
+            
+            <div class="category-card bg-gradient-to-br from-yellow-400 to-orange-600 p-8 rounded-xl text-white text-center" onclick="goToShopWithFilter('exotic')">
+                <i class="fas fa-star text-4xl mb-4"></i>
+                <h3 class="text-2xl font-bold mb-2">Exotic</h3>
+                <p>Rare and exotic produce</p>
+                <div class="mt-4 text-sm opacity-90">
+                    <p>Dragon Fruit, Lychee, Durian & More</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Details Section -->
+        <section class="mt-16">
+            <h2 class="text-3xl font-bold text-center mb-12">What Makes Our Categories Special</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-red-100 p-3 rounded-full">
+                            <i class="fas fa-apple-alt text-red-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Premium Fruits</h4>
+                            <p class="text-gray-600">Our fruits are carefully selected from the best orchards and farms, ensuring peak ripeness and maximum nutritional value.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fas fa-carrot text-green-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Fresh Vegetables</h4>
+                            <p class="text-gray-600">From leafy greens to root vegetables, all our produce is harvested at the perfect time for optimal taste and nutrition.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <i class="fas fa-seedling text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Aromatic Herbs</h4>
+                            <p class="text-gray-600">Fresh herbs picked daily to ensure maximum flavor and aroma for your culinary creations.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-yellow-100 p-3 rounded-full">
+                            <i class="fas fa-star text-yellow-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Exotic Delights</h4>
+                            <p class="text-gray-600">Rare and exotic fruits and vegetables sourced from around the world, bringing unique flavors to your table.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="bg-green-600 rounded-2xl p-8 mt-16 text-center text-white">
+            <h2 class="text-3xl font-bold mb-4">Ready to Shop?</h2>
+            <p class="text-xl mb-6">Browse our full collection of premium organic produce</p>
+            <a href="shop.html" class="bg-white text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all inline-block">
+                                                   View All Products
+            </a>
+        </section>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/254714096025?text=Hello! I'm interested in learning more about AGS Limited Company's product categories." 
+       target="_blank" class="fixed bottom-6 left-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg z-50 transition-all transform hover:scale-110">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <script src="js/common.js"></script>
+    <script>
+        function goToShopWithFilter(category) {
+            window.location.href = `shop.html?filter=${category}`;
+        }
+    </script>
+</body>
+</html>
